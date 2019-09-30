@@ -12,8 +12,8 @@ class Cube
 
     em = edge + margin
     cube_edge = (3 * em) - margin
-    m = cube_edge / 2
-    move_vector = [-m, -m, -m]
+    radius = cube_edge / 2
+    move_vector = [-radius, -radius, -radius]
 
     all_faces = Array.new
     # Iterate 3 times in 3 directions
@@ -40,7 +40,34 @@ class Cube
         end
       end
     end
+    all_faces.flatten!
+    self.add_materials(all_faces, radius)
   end
+
+
+  # Add right materials to sides of cube
+  def self.add_materials(faces, radius)
+    faces.each do |face|
+      center = face.bounds.center.transform @transformation
+      if center.x == (radius)
+        face.material = "red"
+      elsif center.x == (-radius)
+        face.material = "darkorange"
+      elsif center.y == (radius)
+        face.material = "darkblue"
+      elsif center.y == (-radius)
+        face.material = "green"
+      elsif center.z == (radius)
+        face.material = "white"
+      elsif center.z == (-radius)
+        face.material = "yellow"
+      else
+        face.material = "dimgray"
+      end 
+    end
+  end
+
+
 
 end
 
