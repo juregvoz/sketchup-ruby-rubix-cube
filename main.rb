@@ -68,7 +68,22 @@ class Cube
   end
 
 
+  # Add toolbar with button for creating cube
+  def self.add_toolbar
+    # Create new toolbar
+    toolbar = UI::Toolbar.new("Rubix Cube")
+
+    # Add command Create Cube
+    cmd1 = UI::Command.new("Create Cube") {self.create_cube}
+    cmd1.tooltip = "Create Cube"
+    cmd1.small_icon = File.join(__dir__, 'rubix_cube', 'icons', 'create.png')
+    cmd1.large_icon = File.join(__dir__, 'rubix_cube', 'icons', 'create.png')
+
+    # Add items and show toolbar
+    toolbar = toolbar.add_item cmd1
+    toolbar.show
+  end
 
 end
 
-Cube.create_cube
+Cube.add_toolbar
