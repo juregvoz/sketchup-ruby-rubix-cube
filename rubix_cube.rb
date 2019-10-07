@@ -1,5 +1,40 @@
 class Cube
 
+  # Mapper for selecting side of cube for rotation
+  SIDE_ROTATION_MAPPING = {
+    :left => {
+      :vector => [-1,0,0],
+      :extremum => :min,
+      :cordinate => {:name => :x, :index => 0}
+    },
+    :right => {
+      :vector => [1,0,0],
+      :extremum => :max,
+      :cordinate => {:name => :x, :index => 0}
+    },
+    :front => {
+      :vector => [0,-1,0],
+      :extremum => :min,
+      :cordinate => {:name => :y, :index => 1}
+    },
+    :back => {
+      :vector => [0,1,0],
+      :extremum => :max,
+      :cordinate => {:name => :y, :index => 1}
+    },
+    :up => {
+      :vector => [0,0,1],
+      :extremum => :max,
+      :cordinate => {:name => :z, :index => 2}           
+    },
+    :down => {
+      :vector => [0,0,-1],
+      :extremum => :min,
+      :cordinate => {:name => :z, :index => 2}  
+    }
+  }
+
+
   # Create a 3 x 3 cube in origin of SketchUp cordinate system
   #
   # edge - length of inner cube edge
