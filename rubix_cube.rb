@@ -34,6 +34,7 @@ class Cube
     }
   }
 
+  ANGLE = -90.degrees
 
   # Create a 3 x 3 cube in origin of SketchUp cordinate system
   #
@@ -100,6 +101,59 @@ class Cube
         face.material = "dimgray"
       end 
     end
+  end
+
+  ############################################################
+  # Rotate chosen side of cube in chosen direction
+  #
+  # @param side      [Symbol] of cube
+  # @param direction [Symbol] of rotation
+  #
+  # @example: Cube.rotate(:left, :cw); Cube.rotate(:up, :ccw)
+  ############################################################
+  def self.rotate(side, direction)
+    # TODO: add comments!
+    inner_cubes = @cube.entities.grep(Sketchup::Group)
+    side_specs = SIDE_ROTATION_MAPPING[side]
+    cordinate_name = side_specs[:cordinate][:name]
+    cordinate_index = side_specs[:cordinate][:index]
+    extremum = side_specs[:extremum]
+
+    ext_cordinate = get_extremum(@cube, extremum, cordinate_name)
+    side_center = @cube.bounds.center.clone
+    side_center[cordinate_index] = ext_cordinate
+
+    vector = Geom::Vector3d.new(side_specs[:vector])
+    angle = direction == :cw ? ANGLE : -ANGLE
+    view = Sketchup.active_model.active_view
+    number_of_frames = 15
+    angle_change = angle / number_of_frames.to_f
+    rotation = Geom::Transformation.rotation(side_center, vector, angle_change)
+
+    temp_group_arr = Array.new
+    inner_cubes.each do |cub|
+      cub_ext_cordinate = get_extremum(cub, extremum, cordinate_name)
+      temp_group_arr << cub if cub_ext_cordinate == ext_cordinate
+    end
+
+    number_of_frames.times do
+      temp_group_arr.each{|cub| cub.transform!(rotation)}
+      view.refresh
+    end
+  end
+
+
+  ############################################################
+  # Get chosen extremum coordinate of input group.
+  #
+  # @param group      [Sketchup::Group]
+  # @param extremum   [Symbol] :min or :max
+  # @param cordinate  [Symbol] :x, :y or :z
+  #
+  # @example: get_extremum(grp, :max, :z)
+  ############################################################
+  def self.get_extremum(group, extremum, cordinate)
+    return group.bounds.send(extremum).send(cordinate)
   end
 
 
