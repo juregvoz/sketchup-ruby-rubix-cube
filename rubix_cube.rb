@@ -62,13 +62,11 @@ class Cube
           point2 = [i*em, j*em+edge, k*em]
           point3 = [i*em+edge, j*em+edge, k*em]
           point4 = [i*em+edge, j*em, k*em]
-
           # Add face, make inner cube from it, store faces
           face = inner_cube.entities.add_face point1, point2, point3, point4
           face.reverse! if face.normal.z < -0.9
           face.pushpull edge
           all_faces << inner_cube.entities.grep(Sketchup::Face)
-
           # Move inner cube, store transformation, refresh view
           inner_cube.move!(move_vector)
           @transformation = inner_cube.transformation unless @transformation
@@ -112,30 +110,31 @@ class Cube
   # @example: Cube.rotate(:left, :cw); Cube.rotate(:up, :ccw)
   ############################################################
   def self.rotate(side, direction)
-    # TODO: add comments!
+    # Choose inner cubes
     inner_cubes = @cube.entities.grep(Sketchup::Group)
+    # Get specs for chose side
     side_specs = SIDE_ROTATION_MAPPING[side]
     cordinate_name = side_specs[:cordinate][:name]
     cordinate_index = side_specs[:cordinate][:index]
     extremum = side_specs[:extremum]
-
+    # Get extremum and calculate side center
     ext_cordinate = get_extremum(@cube, extremum, cordinate_name)
     side_center = @cube.bounds.center.clone
     side_center[cordinate_index] = ext_cordinate
-
+    # Get rotation
     vector = Geom::Vector3d.new(side_specs[:vector])
     angle = direction == :cw ? ANGLE : -ANGLE
     view = Sketchup.active_model.active_view
     number_of_frames = 15
     angle_change = angle / number_of_frames.to_f
     rotation = Geom::Transformation.rotation(side_center, vector, angle_change)
-
+    # Choose inner cubes on the chosen side of outer cube
     temp_group_arr = Array.new
     inner_cubes.each do |cub|
       cub_ext_cordinate = get_extremum(cub, extremum, cordinate_name)
       temp_group_arr << cub if cub_ext_cordinate == ext_cordinate
     end
-
+    # Rotate the side
     number_of_frames.times do
       temp_group_arr.each{|cub| cub.transform!(rotation)}
       view.refresh
@@ -144,7 +143,8 @@ class Cube
 
 
   ############################################################
-  # Get chosen extremum coordinate of input group.
+  # Get chosen extremum coordinate (highest or lowes x, y or z)
+  # of input group
   #
   # @param group      [Sketchup::Group]
   # @param extremum   [Symbol] :min or :max
