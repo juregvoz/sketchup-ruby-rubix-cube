@@ -168,11 +168,28 @@ class Cube
     cmd1.small_icon = File.join(__dir__, 'rubix_cube', 'icons', 'create.png')
     cmd1.large_icon = File.join(__dir__, 'rubix_cube', 'icons', 'create.png')
 
+    # Add command Create Cube
+    cmd2 = UI::Command.new("Open Rotate Dialog") {self.open_rotate_dialog}
+    cmd2.tooltip = "Open Rotate Dialog"
+    cmd2.small_icon = File.join(__dir__, 'rubix_cube', 'icons', 'rotate.png')
+    cmd2.large_icon = File.join(__dir__, 'rubix_cube', 'icons', 'rotate.png')
+
     # Add items and show toolbar
     toolbar = toolbar.add_item cmd1
+    toolbar = toolbar.add_item cmd2
     toolbar.show
   end
 
+
+  # Open dialog with buttons for rotating sides of cube
+  def self.open_rotate_dialog
+    html_file = File.join(__dir__,'rubix_cube', 'rotate.html')
+    options = {:dialog_title => "Rotate"}
+    dialog = UI::HtmlDialog.new(options)
+    dialog.set_file(html_file)
+    dialog.set_size(280, 240)
+    dialog.show
+  end
 end
 
 Cube.add_toolbar
