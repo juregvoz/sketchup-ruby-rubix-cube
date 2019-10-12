@@ -159,6 +159,7 @@ class Cube
 
   # Add toolbar with button for creating cube
   def self.add_toolbar
+    return nil if @toolbar_added
     # Create new toolbar
     toolbar = UI::Toolbar.new("Rubix Cube")
 
@@ -178,6 +179,7 @@ class Cube
     toolbar = toolbar.add_item cmd1
     toolbar = toolbar.add_item cmd2
     toolbar.show
+    @toolbar_added = true
   end
 
 
