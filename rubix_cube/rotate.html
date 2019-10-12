@@ -25,22 +25,28 @@
 <body>
 
 <div class="div-group btn-group">
-  <button class="button" >Up CW</button>
-  <button class="button" >Down CW</button>
-  <button class="button" >Left CW</button>
-  <button class="button" >Right CW</button>
-  <button class="button" >Front CW</button>
-  <button class="button" >Back CW</button>
+  <button class="button" onclick='rotate("up", "cw")'>Up CW</button>
+  <button class="button" onclick='rotate("down", "cw")'>Down CW</button>
+  <button class="button" onclick='rotate("left", "cw")'>Left CW</button>
+  <button class="button" onclick='rotate("right", "cw")'>Right CW</button>
+  <button class="button" onclick='rotate("front", "cw")'>Front CW</button>
+  <button class="button" onclick='rotate("back", "cw")'>Back CW</button>
 </div>
 
 <div class="div-group btn-group">
-  <button class="button" >Up CCW</button>
-  <button class="button" >Down CCW</button>
-  <button class="button" >Left CCW</button>
-  <button class="button" >Right CCW</button>
-  <button class="button" >Front CCW</button>
-  <button class="button" >Back CCW</button>
+  <button class="button" onclick='rotate("up", "ccw")'>Up CCW</button>
+  <button class="button" onclick='rotate("down", "ccw")'>Down CCW</button>
+  <button class="button" onclick='rotate("left", "ccw")'>Left CCW</button>
+  <button class="button" onclick='rotate("right", "ccw")'>Right CCW</button>
+  <button class="button" onclick='rotate("front", "ccw")'>Front CCW</button>
+  <button class="button" onclick='rotate("back", "ccw")'>Back CCW</button>
 </div>
+
+<script>
+  function rotate(side, direction) {
+    sketchup.rotate(side, direction)
+  }
+</script>
 
 </body>
 </html>
