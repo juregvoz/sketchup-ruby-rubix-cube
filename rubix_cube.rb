@@ -182,6 +182,13 @@ class Cube
     @toolbar_added = true
   end
 
+  # Add callbacks so actions can be performed on button clicks
+  def self.add_callbacks(dialog)
+    # Rotate part of cube baed on pressed button
+    dialog.add_action_callback('rotate') do |ctx, side, direction|
+      self.rotate(side.to_sym, direction.to_sym)
+    end
+  end
 
   # Open dialog with buttons for rotating sides of cube
   def self.open_rotate_dialog
@@ -190,6 +197,8 @@ class Cube
     dialog = UI::HtmlDialog.new(options)
     dialog.set_file(html_file)
     dialog.set_size(280, 240)
+
+    self.add_callbacks(dialog)
     dialog.show
   end
 end
