@@ -45,6 +45,7 @@ class Cube
     entities = model.entities
     view = model.active_view
     @cube = entities.add_group
+    @history = []
 
     em = edge + margin
     cube_edge = (3 * em) - margin
@@ -139,6 +140,8 @@ class Cube
       temp_group_arr.each{|cub| cub.transform!(rotation)}
       view.refresh
     end
+    # Store in history
+    @history << [side, direction]
   end
 
 
