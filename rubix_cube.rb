@@ -204,6 +204,23 @@ class Cube
     self.add_callbacks(dialog)
     dialog.show
   end
+
+  # Revert changes made to the cube in reverse order
+  def self.solve_cube
+    # Make a deep copy of history
+    history = Marshal.load(Marshal.dump(@history))
+
+    while history.any?
+      side, direction = history.pop
+      if direction == :cw
+        direction = :ccw
+      else
+        direction = :cw
+      end
+      self.rotate(side, direction)
+    end
+    @history.clear
+  end
 end
 
 Cube.add_toolbar
