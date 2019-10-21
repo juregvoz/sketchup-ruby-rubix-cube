@@ -19,6 +19,9 @@
   cursor: pointer;
   background-color: #669999;
 }
+.btn-group .bottom {
+  margin-top: 25
+}
 
 </style>
 </head>
@@ -31,6 +34,7 @@
   <button class="button" onclick='rotate("right", "cw")'>Right CW</button>
   <button class="button" onclick='rotate("front", "cw")'>Front CW</button>
   <button class="button" onclick='rotate("back", "cw")'>Back CW</button>
+  <button class="button bottom" onclick='mix()'>Mix</button>
 </div>
 
 <div class="div-group btn-group">
@@ -40,11 +44,18 @@
   <button class="button" onclick='rotate("right", "ccw")'>Right CCW</button>
   <button class="button" onclick='rotate("front", "ccw")'>Front CCW</button>
   <button class="button" onclick='rotate("back", "ccw")'>Back CCW</button>
+  <button class="button bottom" onclick='solve()'>Solve</button>
 </div>
 
 <script>
   function rotate(side, direction) {
     sketchup.rotate(side, direction)
+  }
+  function mix() {
+    sketchup.mix()
+  }
+  function solve(side, direction) {
+    sketchup.solve()
   }
 </script>
 
