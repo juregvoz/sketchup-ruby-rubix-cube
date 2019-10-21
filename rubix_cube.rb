@@ -187,9 +187,13 @@ class Cube
 
   # Add callbacks so actions can be performed on button clicks
   def self.add_callbacks(dialog)
-    # Rotate part of cube baed on pressed button
-    dialog.add_action_callback('rotate') do |ctx, side, direction|
+    # Rotate part of cube based on pressed button
+    dialog.add_action_callback('rotate') do |_, side, direction|
       self.rotate(side.to_sym, direction.to_sym)
+    end
+    # Solve the cube - reset to initial state
+    dialog.add_action_callback('solve') do |_|
+      self.solve_cube
     end
   end
 
@@ -199,7 +203,7 @@ class Cube
     options = {:dialog_title => "Rotate"}
     dialog = UI::HtmlDialog.new(options)
     dialog.set_file(html_file)
-    dialog.set_size(280, 240)
+    dialog.set_size(280, 290)
 
     self.add_callbacks(dialog)
     dialog.show
