@@ -34,6 +34,8 @@ class Cube
     }
   }
 
+  SIDES = SIDE_ROTATION_MAPPING.keys
+  DIRECTIONS = [:cw, :ccw]
   ANGLE = -90.degrees
 
   # Create a 3 x 3 cube in origin of SketchUp cordinate system
@@ -195,6 +197,10 @@ class Cube
     dialog.add_action_callback('solve') do |_|
       self.solve_cube
     end
+    # Randomly mix the cube
+    dialog.add_action_callback('mix') do |_|
+      self.mix_cube
+    end
   end
 
   # Open dialog with buttons for rotating sides of cube
@@ -224,6 +230,12 @@ class Cube
       self.rotate(side, direction)
     end
     @history.clear
+  end
+
+  # Rotate random cube sides in random directions 30 times
+  def self.mix_cube
+    sid_len = SIDES.length; dir_len = DIRECTIONS.length
+    30.times {self.rotate(SIDES[rand(sid_len)], DIRECTIONS[rand(dir_len)])}
   end
 end
 
