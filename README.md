@@ -2,12 +2,10 @@
 ## Description
 Script for creating and manipulating Rubix Cube inside Sketchup.
 
-
-![cube](screenshots/cube.PNG)
-![cube_dialog](screenshots/cube_dialog.PNG)
+![gif](rubix.gif)
 ## Installation
 
-First you need to install [SketchUp](https://www.sketchup.com/plans-and-pricing#for-personal).
+First you need to install [SketchUp](https://help.sketchup.com/en/downloading-older-versions).
 
 To install the Rubix Cube, copy folder ```rubix_cube``` and file ```rubix_cube.rb``` inside Sketchup Plugins folder, which can be found (on Windows) on similar filepath:
 ```C:\Users\User1\AppData\Roaming\SketchUp\SketchUp 2017\SketchUp\Plugins```.
